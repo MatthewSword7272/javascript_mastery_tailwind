@@ -6,17 +6,26 @@ import { navigation } from "../constants";
 import Button from "./Button";
 import MenuSvg from "../assets/svg/MenuSvg";
 import { HambugerMenu } from "../design/Header";
+import { disablePageScroll, enablePageScroll } from "scroll-lock";
 
 const Header = () => {
   const pathname = useLocation();
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   const toggleNav = () => {
-    setMobileNavOpen(!mobileNavOpen);
+    if (mobileNavOpen) {
+      setMobileNavOpen(false);
+      enablePageScroll();
+    } else {
+      setMobileNavOpen(true);
+      disablePageScroll();
+    }
   };
 
   const closeNav = () => {
+    if (!mobileNavOpen) return;
     setMobileNavOpen(false);
+    enablePageScroll();
   };
 
   return (
